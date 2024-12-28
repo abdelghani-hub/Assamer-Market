@@ -1,0 +1,18 @@
+server:
+    port: 8080
+
+spring:
+    datasource:
+        driver-class-name: org.postgresql.Driver
+        url: jdbc:postgresql://localhost:5432/sudest_market?autoReconnect=true
+        username: root
+        password: password
+
+    jpa:
+        properties:
+            hibernate:
+                default_schema: public
+
+    liquibase:
+        enabled: true
+        change-log: db/changelog/master.yaml
