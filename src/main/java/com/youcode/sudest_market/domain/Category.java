@@ -16,20 +16,21 @@ public class Category {
     @Column(unique = true)
     private String name;
 
+    @Column(name = "image_src")
+    private String imageSrc;
+
     // Relationships ************************************************
     @OneToMany(mappedBy = "category")
     private List<Product> products;
-    
-    @OneToOne(mappedBy = "category")
-    private Photo photo;
 
     // **************************************************************
 
     public Category() {
     }
 
-    public Category(String name) {
+    public Category(String name, String imageSrc) {
         this.name = name;
+        this.imageSrc = imageSrc;
     }
 
     public UUID getId() {
@@ -42,6 +43,18 @@ public class Category {
 
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getImageSrc() {
+        return imageSrc;
+    }
+
+    public void setImageSrc(String imageSrc) {
+        this.imageSrc = imageSrc;
     }
 
     public List<Product> getProducts() {
@@ -58,18 +71,6 @@ public class Category {
 
     public void removeProduct(Product product) {
         this.products.remove(product);
-    }
-
-    public Photo getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(Photo photo) {
-        this.photo = photo;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     @Override

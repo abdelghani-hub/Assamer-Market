@@ -21,12 +21,6 @@ public class Photo {
     @JoinColumn(name = "product_id")
     private Product product;
     
-    @OneToOne(
-            fetch = FetchType.LAZY
-    )
-    @JoinColumn(name = "category_id")
-    private Category category;
-    
     // **************************************************************
 
     public Photo() {
@@ -58,14 +52,6 @@ public class Photo {
 
     public void setProduct(Product product) {
         this.product = product;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
     }
 
     @Override

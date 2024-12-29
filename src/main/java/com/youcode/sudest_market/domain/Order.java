@@ -35,7 +35,6 @@ public class Order {
     private List<OrderProduct> orderProducts;
 
     @OneToOne(mappedBy = "order")
-    @JoinColumn(name = "payment_id")
     private Payment payment;
 
     // **************************************************************
