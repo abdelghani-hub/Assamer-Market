@@ -18,75 +18,154 @@ import java.util.Map;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Map<String , List<String>>> handleValidationExceptions(MethodArgumentNotValidException exception){
-        Map<String , List<String>> errors = new HashMap<>();
+    public ResponseEntity<Map<String, Object>> handleValidationExceptions(MethodArgumentNotValidException exception) {
+        List<Map<String, String>> errors = new ArrayList<>();
         exception.getBindingResult().getFieldErrors().forEach(error -> {
-            if(!errors.containsKey(error.getField())){
-                List<String> values = new ArrayList<>();
-                values.add(error.getDefaultMessage());
-                errors.put(error.getField() , values);
-            }else
-                errors.get(error.getField()).add(error.getDefaultMessage());
+            Map<String, String> errorDetail = new HashMap<>();
+            errorDetail.put("field", error.getField());
+            errorDetail.put("message", error.getDefaultMessage());
+            errorDetail.put("code", "VALIDATION_ERROR");
+            errors.add(errorDetail);
         });
-        return new ResponseEntity<>(errors , HttpStatus.BAD_REQUEST);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("status", "error");
+        response.put("errors", errors);
+
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(AlreadyExistException.class)
-    public ResponseEntity<Map<String, String>> handleAlreadyExistException(AlreadyExistException exception) {
-        Map<String, String> error = new HashMap<>();
-        error.put("error", exception.getMessage());
-        return new ResponseEntity<>(error, HttpStatus.CONFLICT);
+    public ResponseEntity<Map<String, Object>> handleAlreadyExistException(AlreadyExistException exception) {
+        Map<String, Object> response = new HashMap<>();
+        List<Map<String, String>> errors = new ArrayList<>();
+
+        Map<String, String> errorDetail = new HashMap<>();
+        errorDetail.put("field", exception.getField());
+        errorDetail.put("message", exception.getMessage());
+        errorDetail.put("code", "ALREADY_EXISTS");
+        errors.add(errorDetail);
+
+        response.put("status", "error");
+        response.put("errors", errors);
+
+        return new ResponseEntity<>(response, HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<Map<String, String>> handleEntityNotFoundException(EntityNotFoundException exception) {
-        Map<String, String> error = new HashMap<>();
-        error.put("error", exception.getMessage());
-        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    public ResponseEntity<Map<String, Object>> handleEntityNotFoundException(EntityNotFoundException exception) {
+        Map<String, Object> response = new HashMap<>();
+        List<Map<String, String>> errors = new ArrayList<>();
+
+        Map<String, String> errorDetail = new HashMap<>();
+        errorDetail.put("message", exception.getMessage());
+        errorDetail.put("code", "ENTITY_NOT_FOUND");
+        errors.add(errorDetail);
+
+        response.put("status", "error");
+        response.put("errors", errors);
+
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(MismatchException.class)
-    public ResponseEntity<Map<String, List<String>>> handleMismatchException(MismatchException exception) {
-        Map<String, List<String>> errors = new HashMap<>();
-        List<String> values = new ArrayList<>();
-        values.add(exception.getMessage());
-        errors.put(exception.getField(), values);
-        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+    public ResponseEntity<Map<String, Object>> handleMismatchException(MismatchException exception) {
+        Map<String, Object> response = new HashMap<>();
+        List<Map<String, String>> errors = new ArrayList<>();
+
+        Map<String, String> errorDetail = new HashMap<>();
+        errorDetail.put("field", exception.getField());
+        errorDetail.put("message", exception.getMessage());
+        errorDetail.put("code", "MISMATCH_ERROR");
+        errors.add(errorDetail);
+
+        response.put("status", "error");
+        response.put("errors", errors);
+
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(InvalidCredentialsException.class)
-    public ResponseEntity<Map<String, String>> handleInvalidCredentialsException(InvalidCredentialsException exception) {
-        Map<String, String> error = new HashMap<>();
-        error.put("error", exception.getMessage());
-        return new ResponseEntity<>(error, HttpStatus.UNAUTHORIZED);
+    public ResponseEntity<Map<String, Object>> handleInvalidCredentialsException(InvalidCredentialsException exception) {
+        Map<String, Object> response = new HashMap<>();
+        List<Map<String, String>> errors = new ArrayList<>();
+
+        Map<String, String> errorDetail = new HashMap<>();
+        errorDetail.put("field", "credentials");
+        errorDetail.put("message", exception.getMessage());
+        errorDetail.put("code", "INVALID_CREDENTIALS");
+        errors.add(errorDetail);
+
+        response.put("status", "error");
+        response.put("errors", errors);
+
+        return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
     }
 
     @ExceptionHandler(NullOrBlankArgException.class)
-    public ResponseEntity<Map<String, String>> handleNullOrBlankArgException(NullOrBlankArgException exception) {
-        Map<String, String> error = new HashMap<>();
-        error.put("error", exception.getMessage());
-        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    public ResponseEntity<Map<String, Object>> handleNullOrBlankArgException(NullOrBlankArgException exception) {
+        Map<String, Object> response = new HashMap<>();
+        List<Map<String, String>> errors = new ArrayList<>();
+
+        Map<String, String> errorDetail = new HashMap<>();
+        errorDetail.put("arg", exception.getArg());
+        errorDetail.put("message", exception.getMessage());
+        errorDetail.put("code", "NULL_OR_BLANK_ARG");
+        errors.add(errorDetail);
+
+        response.put("status", "error");
+        response.put("errors", errors);
+
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(NotValidConstraintException.class)
-    public ResponseEntity<Map<String, String>> handleNotValidConstraintException(NotValidConstraintException exception) {
-        Map<String, String> error = new HashMap<>();
-        error.put("error", exception.getMessage());
-        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    public ResponseEntity<Map<String, Object>> handleNotValidConstraintException(NotValidConstraintException exception) {
+        Map<String, Object> response = new HashMap<>();
+        List<Map<String, String>> errors = new ArrayList<>();
+
+        Map<String, String> errorDetail = new HashMap<>();
+        errorDetail.put("message", exception.getMessage());
+        errorDetail.put("code", "NOT_VALID_CONSTRAINT");
+        errors.add(errorDetail);
+
+        response.put("status", "error");
+        response.put("errors", errors);
+
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(DateTimeParseException.class)
-    public ResponseEntity<Map<String, String>> handleDateTimeParseException(DateTimeParseException exception) {
-        Map<String, String> error = new HashMap<>();
-        error.put("error", exception.getMessage());
-        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    public ResponseEntity<Map<String, Object>> handleDateTimeParseException(DateTimeParseException exception) {
+        Map<String, Object> response = new HashMap<>();
+        List<Map<String, String>> errors = new ArrayList<>();
+
+        Map<String, String> errorDetail = new HashMap<>();
+        errorDetail.put("field", "date");
+        errorDetail.put("message", exception.getMessage());
+        errorDetail.put("code", "INVALID_DATE_FORMAT");
+        errors.add(errorDetail);
+
+        response.put("status", "error");
+        response.put("errors", errors);
+
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
-    // JWT Exceptions
     @ExceptionHandler(ExpiredJwtException.class)
-    public ResponseEntity<Map<String, String>> handleExpiredJwtException(ExpiredJwtException exception) {
-        Map<String, String> error = new HashMap<>();
-        error.put("error", exception.getMessage());
-        return new ResponseEntity<>(error, HttpStatus.UNAUTHORIZED);
+    public ResponseEntity<Map<String, Object>> handleExpiredJwtException(ExpiredJwtException exception) {
+        Map<String, Object> response = new HashMap<>();
+        List<Map<String, String>> errors = new ArrayList<>();
+
+        Map<String, String> errorDetail = new HashMap<>();
+        errorDetail.put("field", "token");
+        errorDetail.put("message", exception.getMessage());
+        errorDetail.put("code", "EXPIRED_TOKEN");
+        errors.add(errorDetail);
+
+        response.put("status", "error");
+        response.put("errors", errors);
+
+        return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
     }
 }
