@@ -202,7 +202,7 @@ databaseChangeLog:
                   constraints:
                     nullable: false
                     primaryKey: true
-                    primaryKeyName: pk_photo
+                    primaryKeyName: pk_attachment
                   name: id
                   type: UUID
               - column:
@@ -211,7 +211,7 @@ databaseChangeLog:
               - column:
                   name: product_id
                   type: UUID
-            tableName: photo
+            tableName: attachment
   - changeSet:
       id: 1735482066113-9
       author: Youcode (generated)
@@ -443,7 +443,7 @@ databaseChangeLog:
       changes:
         - addForeignKeyConstraint:
             baseColumnNames: product_id
-            baseTableName: photo
+            baseTableName: attachment
             constraintName: FK_PHOTO_ON_PRODUCT
             referencedColumnNames: id
             referencedTableName: product

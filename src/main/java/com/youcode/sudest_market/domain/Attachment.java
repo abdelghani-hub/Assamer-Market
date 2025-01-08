@@ -6,7 +6,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Entity
-public class Photo {
+public class Attachment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -23,10 +23,10 @@ public class Photo {
     
     // **************************************************************
 
-    public Photo() {
+    public Attachment() {
     }
 
-    public Photo(String src) {
+    public Attachment(String src) {
         this.src = src;
     }
 
@@ -57,8 +57,8 @@ public class Photo {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Photo photo)) return false;
-        return Objects.equals(getId(), photo.getId()) && Objects.equals(getSrc(), photo.getSrc());
+        if (!(o instanceof Attachment attachment)) return false;
+        return Objects.equals(getId(), attachment.getId()) && Objects.equals(getSrc(), attachment.getSrc());
     }
 
     @Override
