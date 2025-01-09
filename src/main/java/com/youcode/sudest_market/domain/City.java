@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
-@Entity()
+@Entity
 public class City {
 
     @Id
