@@ -1,7 +1,6 @@
 package com.youcode.sudest_market.web.vm.user;
 
 import jakarta.validation.constraints.*;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

@@ -12,6 +12,7 @@ spring:
     properties:
       hibernate:
         default_schema: public
+    open-in-view: false
 
   liquibase:
     enabled: true
