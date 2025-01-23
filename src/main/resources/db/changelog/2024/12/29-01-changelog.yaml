@@ -1,0 +1,494 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1735482066113-1
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_app_user
+                  name: id
+                  type: UUID
+              - column:
+                  name: username
+                  type: VARCHAR(255)
+              - column:
+                  name: password
+                  type: VARCHAR(255)
+              - column:
+                  name: email
+                  type: VARCHAR(255)
+              - column:
+                  name: role
+                  type: VARCHAR(255)
+              - column:
+                  name: first_name
+                  type: VARCHAR(255)
+              - column:
+                  name: last_name
+                  type: VARCHAR(255)
+              - column:
+                  name: phone_number
+                  type: VARCHAR(255)
+              - column:
+                  name: address
+                  type: VARCHAR(255)
+              - column:
+                  name: city_id
+                  type: UUID
+            tableName: app_user
+  - changeSet:
+      id: 1735482066113-2
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_category
+                  name: id
+                  type: UUID
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+              - column:
+                  name: image_src
+                  type: VARCHAR(255)
+            tableName: category
+  - changeSet:
+      id: 1735482066113-3
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_city
+                  name: id
+                  type: UUID
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+              - column:
+                  name: postal_code
+                  type: VARCHAR(255)
+            tableName: city
+  - changeSet:
+      id: 1735482066113-4
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_favorite
+                  name: id
+                  type: UUID
+              - column:
+                  name: product_id
+                  type: UUID
+              - column:
+                  name: app_user_id
+                  type: UUID
+            tableName: favorite
+  - changeSet:
+      id: 1735482066113-5
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_order
+                  name: id
+                  type: UUID
+              - column:
+                  name: total_amount
+                  type: DOUBLE
+              - column:
+                  name: status
+                  type: SMALLINT
+              - column:
+                  name: from_address
+                  type: VARCHAR(255)
+              - column:
+                  name: to_address
+                  type: VARCHAR(255)
+              - column:
+                  name: app_user_id
+                  type: UUID
+            tableName: order
+  - changeSet:
+      id: 1735482066113-6
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_orderproduct
+                  name: id
+                  type: UUID
+              - column:
+                  name: units
+                  type: INT
+              - column:
+                  name: product_id
+                  type: UUID
+              - column:
+                  name: order_id
+                  type: UUID
+            tableName: order_product
+  - changeSet:
+      id: 1735482066113-7
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_payment
+                  name: id
+                  type: UUID
+              - column:
+                  name: method
+                  type: VARCHAR(255)
+              - column:
+                  name: amount
+                  type: DOUBLE
+              - column:
+                  name: currency
+                  type: VARCHAR(255)
+              - column:
+                  name: status
+                  type: SMALLINT
+              - column:
+                  name: payed_at
+                  type: DATETIME
+              - column:
+                  name: order_id
+                  type: UUID
+            tableName: payment
+  - changeSet:
+      id: 1735482066113-8
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_attachment
+                  name: id
+                  type: UUID
+              - column:
+                  name: src
+                  type: VARCHAR(255)
+              - column:
+                  name: product_id
+                  type: UUID
+            tableName: attachment
+  - changeSet:
+      id: 1735482066113-9
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_product
+                  name: id
+                  type: UUID
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+              - column:
+                  name: slug
+                  type: VARCHAR(255)
+              - column:
+                  name: summary
+                  type: VARCHAR(255)
+              - column:
+                  name: description
+                  type: VARCHAR(1000)
+              - column:
+                  name: quantity
+                  type: INT
+              - column:
+                  name: price
+                  type: DOUBLE
+              - column:
+                  name: status
+                  type: VARCHAR(255)
+              - column:
+                  name: created_at
+                  type: DATETIME
+              - column:
+                  name: updated_at
+                  type: DATETIME
+              - column:
+                  name: primary_image_src
+                  type: VARCHAR(255)
+              - column:
+                  name: store_id
+                  type: UUID
+              - column:
+                  name: category_id
+                  type: UUID
+            tableName: product
+  - changeSet:
+      id: 1735482066113-10
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_sellerrequest
+                  name: id
+                  type: UUID
+              - column:
+                  name: status
+                  type: SMALLINT
+              - column:
+                  name: requested_at
+                  type: DATETIME
+              - column:
+                  name: app_user_id
+                  type: UUID
+            tableName: seller_request
+  - changeSet:
+      id: 1735482066113-11
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_store
+                  name: id
+                  type: UUID
+              - column:
+                  name: status
+                  type: SMALLINT
+              - column:
+                  name: created_at
+                  type: DATETIME
+              - column:
+                  name: updated_at
+                  type: DATETIME
+              - column:
+                  name: app_user_id
+                  type: UUID
+            tableName: store
+  - changeSet:
+      id: 1735482066113-12
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addUniqueConstraint:
+            columnNames: email
+            constraintName: uc_app_user_email
+            tableName: app_user
+  - changeSet:
+      id: 1735482066113-13
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addUniqueConstraint:
+            columnNames: username
+            constraintName: uc_app_user_username
+            tableName: app_user
+  - changeSet:
+      id: 1735482066113-14
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addUniqueConstraint:
+            columnNames: name
+            constraintName: uc_category_name
+            tableName: category
+  - changeSet:
+      id: 1735482066113-15
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addUniqueConstraint:
+            columnNames: name
+            constraintName: uc_city_name
+            tableName: city
+  - changeSet:
+      id: 1735482066113-16
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addUniqueConstraint:
+            columnNames: postal_code
+            constraintName: uc_city_postal_code
+            tableName: city
+  - changeSet:
+      id: 1735482066113-17
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: city_id
+            baseTableName: app_user
+            constraintName: FK_APP_USER_ON_CITY
+            referencedColumnNames: id
+            referencedTableName: city
+  - changeSet:
+      id: 1735482066113-18
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: app_user_id
+            baseTableName: favorite
+            constraintName: FK_FAVORITE_ON_APP_USER
+            referencedColumnNames: id
+            referencedTableName: app_user
+  - changeSet:
+      id: 1735482066113-19
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: product_id
+            baseTableName: favorite
+            constraintName: FK_FAVORITE_ON_PRODUCT
+            referencedColumnNames: id
+            referencedTableName: product
+  - changeSet:
+      id: 1735482066113-20
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: order_id
+            baseTableName: order_product
+            constraintName: FK_ORDERPRODUCT_ON_ORDER
+            referencedColumnNames: id
+            referencedTableName: order
+  - changeSet:
+      id: 1735482066113-21
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: product_id
+            baseTableName: order_product
+            constraintName: FK_ORDERPRODUCT_ON_PRODUCT
+            referencedColumnNames: id
+            referencedTableName: product
+  - changeSet:
+      id: 1735482066113-22
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: app_user_id
+            baseTableName: order
+            constraintName: FK_ORDER_ON_APP_USER
+            referencedColumnNames: id
+            referencedTableName: app_user
+  - changeSet:
+      id: 1735482066113-23
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: order_id
+            baseTableName: payment
+            constraintName: FK_PAYMENT_ON_ORDER
+            referencedColumnNames: id
+            referencedTableName: order
+  - changeSet:
+      id: 1735482066113-24
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: product_id
+            baseTableName: attachment
+            constraintName: FK_PHOTO_ON_PRODUCT
+            referencedColumnNames: id
+            referencedTableName: product
+  - changeSet:
+      id: 1735482066113-25
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: category_id
+            baseTableName: product
+            constraintName: FK_PRODUCT_ON_CATEGORY
+            referencedColumnNames: id
+            referencedTableName: category
+  - changeSet:
+      id: 1735482066113-26
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: store_id
+            baseTableName: product
+            constraintName: FK_PRODUCT_ON_STORE
+            referencedColumnNames: id
+            referencedTableName: store
+  - changeSet:
+      id: 1735482066113-27
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: app_user_id
+            baseTableName: seller_request
+            constraintName: FK_SELLERREQUEST_ON_APP_USER
+            referencedColumnNames: id
+            referencedTableName: app_user
+  - changeSet:
+      id: 1735482066113-28
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: app_user_id
+            baseTableName: store
+            constraintName: FK_STORE_ON_APP_USER
+            referencedColumnNames: id
+            referencedTableName: app_user
+
