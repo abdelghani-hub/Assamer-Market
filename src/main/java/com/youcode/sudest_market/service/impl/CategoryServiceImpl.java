@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -54,7 +55,7 @@ public class CategoryServiceImpl implements com.youcode.sudest_market.service.Ca
     }
 
     @Override
-    public Page<Category> findAll(Pageable pageable) {
+    public Page<Category> page(Pageable pageable) {
         return categoryRepository.findAll(pageable);
     }
 
@@ -62,5 +63,10 @@ public class CategoryServiceImpl implements com.youcode.sudest_market.service.Ca
     public Category findByName(String name) {
         return categoryRepository.findByName(name)
                 .orElseThrow(() -> new EntityNotFoundException("Category"));
+    }
+
+    @Override
+    public List<Category> findAll() {
+        return categoryRepository.findAll();
     }
 }

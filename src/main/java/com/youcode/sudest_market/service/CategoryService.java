@@ -6,6 +6,7 @@ import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.UUID;
 
 public interface CategoryService {
@@ -18,7 +19,9 @@ public interface CategoryService {
 
     boolean delete(UUID id);
 
-    Page<Category> findAll(Pageable pageable);
+    Page<Category> page(Pageable pageable);
 
     Category findByName(String name);
+
+    List<Category> findAll();
 }
