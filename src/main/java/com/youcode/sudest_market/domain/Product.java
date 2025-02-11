@@ -55,9 +55,6 @@ public class Product {
 
     @OneToMany(mappedBy = "product")
     private List<OrderProduct> orderProducts;
-    
-    @OneToMany(mappedBy = "product")
-    private List<Attachment> attachments;
 
     // **************************************************************
 
@@ -211,22 +208,6 @@ public class Product {
     
     public void removeOrderProduct(OrderProduct orderProduct) {
         this.orderProducts.remove(orderProduct);
-    }
-
-    public List<Attachment> getPhotos() {
-        return attachments;
-    }
-
-    public void setPhotos(List<Attachment> attachments) {
-        this.attachments = attachments;
-    }
-    
-    public void addPhoto(Attachment attachment) {
-        this.attachments.add(attachment);
-    }
-    
-    public void removePhoto(Attachment attachment) {
-        this.attachments.remove(attachment);
     }
 
     @Override

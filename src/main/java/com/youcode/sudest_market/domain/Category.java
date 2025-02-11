@@ -1,12 +1,18 @@
 package com.youcode.sudest_market.domain;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
 public class Category {
 
     @Id
@@ -16,62 +22,11 @@ public class Category {
     @Column(unique = true)
     private String name;
 
-    @Column(name = "image_src")
-    private String imageSrc;
-
     // Relationships ************************************************
     @OneToMany(mappedBy = "category")
     private List<Product> products;
 
     // **************************************************************
-
-    public Category() {
-    }
-
-    public Category(String name, String imageSrc) {
-        this.name = name;
-        this.imageSrc = imageSrc;
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getImageSrc() {
-        return imageSrc;
-    }
-
-    public void setImageSrc(String imageSrc) {
-        this.imageSrc = imageSrc;
-    }
-
-    public List<Product> getProducts() {
-        return products;
-    }
-
-    public void setProducts(List<Product> products) {
-        this.products = products;
-    }
-
-    public void addProduct(Product product) {
-        this.products.add(product);
-    }
-
-    public void removeProduct(Product product) {
-        this.products.remove(product);
-    }
 
     @Override
     public boolean equals(Object o) {
