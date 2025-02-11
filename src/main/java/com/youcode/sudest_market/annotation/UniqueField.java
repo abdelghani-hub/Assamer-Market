@@ -2,6 +2,8 @@ package com.youcode.sudest_market.annotation;
 
 import com.youcode.sudest_market.validator.UniqueFieldValidator;
 import jakarta.validation.Constraint;
+import jakarta.validation.Payload;
+
 import java.lang.annotation.*;
 
 @Documented
@@ -11,7 +13,12 @@ import java.lang.annotation.*;
 public @interface UniqueField {
 
     String message() default "already exists";
+
     Class<?>[] groups() default {};
-    Class<?>[] payload() default {};
+
+    Class<? extends Payload>[] payload() default {};
+
     String fieldName();
+
+    Class<?> repository();
 }
