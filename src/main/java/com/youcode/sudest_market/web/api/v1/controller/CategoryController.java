@@ -1,6 +1,8 @@
 package com.youcode.sudest_market.web.api.v1.controller;
 
+import com.youcode.sudest_market.domain.Attachment;
 import com.youcode.sudest_market.domain.Category;
+import com.youcode.sudest_market.service.AttachmentService;
 import com.youcode.sudest_market.service.CategoryService;
 import com.youcode.sudest_market.web.api.v1.response.ApiResponse;
 import com.youcode.sudest_market.web.vm.category.CategoryVM;
@@ -24,6 +26,7 @@ public class CategoryController {
 
     private final CategoryService categoryService;
     private final CategoryVmMapper categoryVmMapper;
+    private final AttachmentService attachmentService;
 
     @PostMapping
     public ResponseEntity<ApiResponse<CategoryVM>> createCategory(@Valid @RequestBody CategoryVM categoryVM) {
@@ -39,7 +42,9 @@ public class CategoryController {
     public ResponseEntity<ApiResponse<CategoryVM>> getCategoryByName(@PathVariable String name) {
         Category category = categoryService.findByName(name);
         CategoryVM categoryVM = categoryVmMapper.toVM(category);
-        return ResponseEntity.ok(ApiResponse.success(categoryVM, "Category retrieved successfully.", new String[]{"/api/v1/categories/" + category.getName()}));
+        Attachment attachment = attachmentService.findByEntityTypeAndEntityId("Category", category.getId()).get(0);
+        categoryVM.setImageSrc("/api/v1/attachments/" + attachment.getId() + "/download");
+        return ResponseEntity.ok(ApiResponse.success(categoryVM, "Category retrieved successfully.", null));
     }
 
     @PutMapping("/{id}")

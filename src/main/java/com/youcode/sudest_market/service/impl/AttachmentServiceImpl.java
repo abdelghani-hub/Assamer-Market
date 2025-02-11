@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.nio.file.*;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -55,5 +56,11 @@ public class AttachmentServiceImpl implements AttachmentService {
     @Override
     public byte[] getFileBytes(Attachment attachment) throws IOException {
         return Files.readAllBytes(Paths.get(attachment.getSrc()));
+    }
+
+    @Override
+    public List<Attachment> findByEntityTypeAndEntityId(String entityType, UUID entityId) {
+        return attachmentRepository.findByEntityTypeAndEntityId(entityType,
+                entityId);
     }
 }
