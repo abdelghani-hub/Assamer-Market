@@ -1,8 +1,6 @@
 package com.youcode.sudest_market.web.api.v1.controller;
 
-import com.youcode.sudest_market.domain.Attachment;
 import com.youcode.sudest_market.domain.Category;
-import com.youcode.sudest_market.service.AttachmentService;
 import com.youcode.sudest_market.service.CategoryService;
 import com.youcode.sudest_market.web.api.v1.response.ApiResponse;
 import com.youcode.sudest_market.web.vm.category.CategoryVM;
@@ -16,7 +14,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/categories")
@@ -61,8 +61,16 @@ public class CategoryController {
     @GetMapping
     @PreAuthorize("permitAll()")
     public ResponseEntity<ApiResponse<Page<CategoryVM>>> getAllCategories(Pageable pageable) {
-        Page<Category> categories = categoryService.findAll(pageable);
+        Page<Category> categories = categoryService.page(pageable);
         Page<CategoryVM> categoryVMs = categories.map(categoryVmMapper::toVM);
         return ResponseEntity.ok(ApiResponse.success(categoryVMs, "Categories retrieved successfully.", new String[]{"/api/v1/categories"}));
+    }
+
+    @GetMapping("/all")
+    @PreAuthorize("permitAll()")
+    public ResponseEntity<ApiResponse<Iterable<CategoryVM>>> getAllCategories() {
+        List<Category> categories = categoryService.findAll();
+        List<CategoryVM> categoryVMs = categories.stream().map(categoryVmMapper::toVM).collect(Collectors.toList());
+        return ResponseEntity.ok(ApiResponse.success(categoryVMs, "Categories retrieved successfully.", null));
     }
 }
