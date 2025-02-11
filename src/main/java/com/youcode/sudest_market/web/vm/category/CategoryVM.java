@@ -25,4 +25,5 @@ public class CategoryVM {
     private String name;
 
     private UUID id;
+    private String imageSrc;
 }

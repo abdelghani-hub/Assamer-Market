@@ -4,7 +4,7 @@ import com.youcode.sudest_market.domain.Attachment;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.Optional;
+import java.util.List;
 import java.util.UUID;
 
 public interface AttachmentService {
@@ -13,4 +13,6 @@ public interface AttachmentService {
     Attachment getAttachment(UUID id);
 
     byte[] getFileBytes(Attachment attachment) throws IOException;
+
+    List<Attachment> findByEntityTypeAndEntityId(String entityType, UUID entityId);
 }
