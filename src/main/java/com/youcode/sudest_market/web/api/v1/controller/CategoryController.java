@@ -31,7 +31,7 @@ public class CategoryController {
         Category savedCategory = categoryService.save(category);
         CategoryVM savedCategoryVM = categoryVmMapper.toVM(savedCategory);
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(ApiResponse.success(savedCategoryVM, "Category created successfully."));
+                .body(ApiResponse.success(savedCategoryVM, "Category created successfully.", new String[]{"/api/v1/categories/" + savedCategory.getName()}));
     }
 
     @GetMapping("/{name}")
@@ -39,7 +39,7 @@ public class CategoryController {
     public ResponseEntity<ApiResponse<CategoryVM>> getCategoryByName(@PathVariable String name) {
         Category category = categoryService.findByName(name);
         CategoryVM categoryVM = categoryVmMapper.toVM(category);
-        return ResponseEntity.ok(ApiResponse.success(categoryVM, "Category retrieved successfully."));
+        return ResponseEntity.ok(ApiResponse.success(categoryVM, "Category retrieved successfully.", new String[]{"/api/v1/categories/" + category.getName()}));
     }
 
     @PutMapping("/{id}")
@@ -47,7 +47,7 @@ public class CategoryController {
         Category category = categoryVmMapper.toEntity(categoryVM);
         Category updatedCategory = categoryService.update(category, id);
         CategoryVM updatedCategoryVM = categoryVmMapper.toVM(updatedCategory);
-        return ResponseEntity.ok(ApiResponse.success(updatedCategoryVM, "Category updated successfully."));
+        return ResponseEntity.ok(ApiResponse.success(updatedCategoryVM, "Category updated successfully.", new String[]{"/api/v1/categories/" + updatedCategory.getName()}));
     }
 
     @DeleteMapping("/{id}")
@@ -61,6 +61,6 @@ public class CategoryController {
     public ResponseEntity<ApiResponse<Page<CategoryVM>>> getAllCategories(Pageable pageable) {
         Page<Category> categories = categoryService.findAll(pageable);
         Page<CategoryVM> categoryVMs = categories.map(categoryVmMapper::toVM);
-        return ResponseEntity.ok(ApiResponse.success(categoryVMs, "Categories retrieved successfully."));
+        return ResponseEntity.ok(ApiResponse.success(categoryVMs, "Categories retrieved successfully.", new String[]{"/api/v1/categories"}));
     }
 }

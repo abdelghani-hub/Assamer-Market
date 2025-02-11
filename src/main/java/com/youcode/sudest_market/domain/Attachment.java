@@ -1,11 +1,17 @@
 package com.youcode.sudest_market.domain;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.Objects;
 import java.util.UUID;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
 public class Attachment {
 
     @Id
@@ -13,56 +19,33 @@ public class Attachment {
     private UUID id;
 
     private String src;
+    private String fileType;
+    private String comment;
 
-    // Relationships ************************************************
-    @ManyToOne(
-            fetch = FetchType.LAZY
-    )
-    @JoinColumn(name = "product_id")
-    private Product product;
-    
-    // **************************************************************
+    // Polymorphic relationship
+    private UUID entityId;
+    private String entityType;
 
-    public Attachment() {
-    }
-
-    public Attachment(String src) {
+    public Attachment(String src, String fileType, String comment, UUID entityId, String entityType) {
         this.src = src;
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public String getSrc() {
-        return src;
-    }
-
-    public void setSrc(String src) {
-        this.src = src;
-    }
-
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
+        this.fileType = fileType;
+        this.comment = comment;
+        this.entityId = entityId;
+        this.entityType = entityType;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Attachment attachment)) return false;
-        return Objects.equals(getId(), attachment.getId()) && Objects.equals(getSrc(), attachment.getSrc());
+        return Objects.equals(getId(), attachment.getId()) &&
+                Objects.equals(getSrc(), attachment.getSrc()) &&
+                Objects.equals(getEntityId(), attachment.getEntityId()) &&
+                Objects.equals(getEntityType(), attachment.getEntityType());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getSrc());
+        return Objects.hash(getId(), getSrc(), getEntityId(), getEntityType());
     }
 }

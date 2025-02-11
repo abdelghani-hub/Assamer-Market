@@ -22,9 +22,6 @@ public class Category {
     @Column(unique = true)
     private String name;
 
-    @Column(name = "image_src")
-    private String imageSrc;
-
     // Relationships ************************************************
     @OneToMany(mappedBy = "category")
     private List<Product> products;
