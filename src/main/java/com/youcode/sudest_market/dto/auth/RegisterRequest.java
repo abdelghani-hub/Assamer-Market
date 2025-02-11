@@ -1,6 +1,8 @@
 package com.youcode.sudest_market.dto.auth;
 
 import com.youcode.sudest_market.annotation.UniqueField;
+import com.youcode.sudest_market.domain.AppUser;
+import com.youcode.sudest_market.repository.AppUserRepository;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,13 +18,21 @@ public class RegisterRequest {
     @NotBlank(message = "Last name is required")
     private String lastName;
 
-    @UniqueField(fieldName = "username", message = "Username already exists")
     @NotBlank(message = "Username is required")
+    @UniqueField(
+            fieldName = "username",
+            repository = AppUserRepository.class,
+            message = "Username already exists"
+    )
     private String username;
 
     @NotBlank(message = "Email is required")
     @Email(message = "Email is not valid")
-    @UniqueField(fieldName = "email", message = "Email already exists")
+    @UniqueField(
+            fieldName = "email",
+            repository = AppUserRepository.class,
+            message = "Email already exists"
+    )
     private String email;
 
     @NotBlank(message = "Address is required")
