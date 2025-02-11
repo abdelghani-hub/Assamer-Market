@@ -26,7 +26,6 @@ public class CategoryController {
 
     private final CategoryService categoryService;
     private final CategoryVmMapper categoryVmMapper;
-    private final AttachmentService attachmentService;
 
     @PostMapping
     public ResponseEntity<ApiResponse<CategoryVM>> createCategory(@Valid @RequestBody CategoryVM categoryVM) {
@@ -42,8 +41,6 @@ public class CategoryController {
     public ResponseEntity<ApiResponse<CategoryVM>> getCategoryByName(@PathVariable String name) {
         Category category = categoryService.findByName(name);
         CategoryVM categoryVM = categoryVmMapper.toVM(category);
-        Attachment attachment = attachmentService.findByEntityTypeAndEntityId("Category", category.getId()).get(0);
-        categoryVM.setImageSrc("/api/v1/attachments/" + attachment.getId() + "/download");
         return ResponseEntity.ok(ApiResponse.success(categoryVM, "Category retrieved successfully.", null));
     }
 
