@@ -8,22 +8,25 @@ public class ApiResponse<T> {
     private String status;
     private List<ErrorDetail> errors;
 
+    private String[] _links;
+
     // Constructor
-    public ApiResponse(T data, String message, String status, List<ErrorDetail> errors) {
+    public ApiResponse(T data, String message, String status, List<ErrorDetail> errors, String[] _links) {
         this.data = data;
         this.message = message;
         this.status = status;
         this.errors = errors;
+        this._links = _links;
     }
 
     // Static success method
-    public static <T> ApiResponse<T> success(T data, String message) {
-        return new ApiResponse<>(data, message, "success", null);
+    public static <T> ApiResponse<T> success(T data, String message, String[] _links) {
+        return new ApiResponse<>(data, message, "success", null, _links);
     }
 
     // Static error method
     public static <T> ApiResponse<T> error(String message, List<ErrorDetail> errors) {
-        return new ApiResponse<>(null, message, "error", errors);
+        return new ApiResponse<>(null, message, "error", errors, null);
     }
 
     // Getters and Setters
@@ -88,5 +91,13 @@ public class ApiResponse<T> {
         public void setMessage(String message) {
             this.message = message;
         }
+    }
+
+    public String[] get_links() {
+        return _links;
+    }
+
+    public void set_links(String[] _links) {
+        this._links = _links;
     }
 }

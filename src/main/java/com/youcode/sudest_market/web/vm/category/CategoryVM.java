@@ -8,6 +8,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.UUID;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -21,4 +23,6 @@ public class CategoryVM {
             message = "Category already exists"
     )
     private String name;
+
+    private UUID id;
 }
