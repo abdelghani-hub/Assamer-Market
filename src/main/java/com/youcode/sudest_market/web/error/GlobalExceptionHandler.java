@@ -80,4 +80,11 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                 .body(ApiResponse.error("Expired token", List.of(errorDetail)));
     }
+
+    @ExceptionHandler(SomethingWrongException.class)
+    public ResponseEntity<ApiResponse<Void>> handleSomethingWrongException(SomethingWrongException exception) {
+        ApiResponse.ErrorDetail errorDetail = new ApiResponse.ErrorDetail(null, exception.getMessage(), "SOMETHING_WRONG");
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(ApiResponse.error("INTERNAL_SERVER_ERROR", List.of(errorDetail)));
+    }
 }
