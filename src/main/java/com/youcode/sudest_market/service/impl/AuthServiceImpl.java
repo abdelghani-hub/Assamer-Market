@@ -12,12 +12,11 @@ import com.youcode.sudest_market.repository.CityRepository;
 import com.youcode.sudest_market.service.AuthService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jose.jws.SignatureAlgorithm;
-import org.springframework.security.oauth2.jwt.JwsHeader;
-import org.springframework.security.oauth2.jwt.JwtClaimsSet;
-import org.springframework.security.oauth2.jwt.JwtEncoder;
-import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
+import org.springframework.security.oauth2.jwt.*;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -89,5 +88,22 @@ public class AuthServiceImpl implements AuthService {
         );
 
         return generateToken(user);
+    }
+
+    @Override
+    public AppUser getAuthenticatedUser() throws RuntimeException {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        // Check if the principal is a Jwt object
+        if (authentication.getPrincipal() instanceof Jwt) {
+            Jwt jwt = (Jwt) authentication.getPrincipal();
+
+            String username = jwt.getClaimAsString("username");
+
+            return appUserRepository.findByUsername(username)
+                    .orElseThrow(() -> new RuntimeException("User not found with username: " + username));
+        }else{
+            throw new RuntimeException("Unexpected principal type: " + authentication.getPrincipal().getClass());
+        }
     }
 }
