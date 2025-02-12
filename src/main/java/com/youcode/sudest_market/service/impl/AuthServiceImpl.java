@@ -7,6 +7,7 @@ import com.youcode.sudest_market.dto.auth.LoginRequest;
 import com.youcode.sudest_market.dto.auth.RegisterRequest;
 import com.youcode.sudest_market.exception.EntityNotFoundException;
 import com.youcode.sudest_market.exception.MismatchException;
+import com.youcode.sudest_market.exception.SomethingWrongException;
 import com.youcode.sudest_market.repository.AppUserRepository;
 import com.youcode.sudest_market.repository.CityRepository;
 import com.youcode.sudest_market.service.AuthService;
@@ -103,7 +104,7 @@ public class AuthServiceImpl implements AuthService {
             return appUserRepository.findByUsername(username)
                     .orElseThrow(() -> new RuntimeException("User not found with username: " + username));
         }else{
-            throw new RuntimeException("Unexpected principal type: " + authentication.getPrincipal().getClass());
+            throw new SomethingWrongException();
         }
     }
 }
