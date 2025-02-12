@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.youcode.sudest_market.repository.SellerRequestRepository;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -36,5 +37,21 @@ public class SellerServiceImpl implements SellerService {
         sellerRequest.setRequestedAt(LocalDateTime.now());
 
         return sellerRequestRepository.save(sellerRequest);
+    }
+
+    @Override
+    public boolean updateSellerRequest(UUID requestId, RequestStatus status) {
+        // Get the request
+        SellerRequest sellerRequest = sellerRequestRepository.findById(requestId)
+                .orElseThrow(() -> new NotValidConstraintException("Request not found"));
+
+        if (sellerRequest.getStatus() == RequestStatus.ACCEPTED && status == RequestStatus.REJECTED) {
+            throw new NotValidConstraintException("You can't reject an accepted request.");
+        }
+        // Update the request status
+        sellerRequest.setStatus(status);
+        sellerRequestRepository.save(sellerRequest);
+
+        return true;
     }
 }
