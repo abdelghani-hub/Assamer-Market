@@ -1,0 +1,21 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1739349330216-1
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropColumn:
+            columnName: status
+            tableName: seller_request
+  - changeSet:
+      id: 1739349330216-2
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addColumn:
+            columns:
+              - column:
+                  name: status
+                  type: VARCHAR(255)
+            tableName: seller_request
+

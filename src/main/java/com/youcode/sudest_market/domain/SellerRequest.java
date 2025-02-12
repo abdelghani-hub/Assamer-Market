@@ -2,18 +2,23 @@ package com.youcode.sudest_market.domain;
 
 import com.youcode.sudest_market.domain.enums.RequestStatus;
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.UUID;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
 public class SellerRequest {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+    @Enumerated(EnumType.STRING)
     private RequestStatus status;
 
     @Column(name = "requested_at")
@@ -27,14 +32,6 @@ public class SellerRequest {
     private AppUser appUser;
     
     // **************************************************************
-
-    public SellerRequest() {
-    }
-
-    public SellerRequest(RequestStatus status, LocalDateTime requestedAt) {
-        this.status = status;
-        this.requestedAt = requestedAt;
-    }
 
     public UUID getId() {
         return id;
