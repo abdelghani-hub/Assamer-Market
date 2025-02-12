@@ -25,9 +25,7 @@ public class SellerRequest {
     private LocalDateTime requestedAt;
 
     // Relationships ************************************************
-    @ManyToOne(
-            fetch = FetchType.LAZY
-    )
+    @ManyToOne
     @JoinColumn(name = "app_user_id")
     private AppUser appUser;
     

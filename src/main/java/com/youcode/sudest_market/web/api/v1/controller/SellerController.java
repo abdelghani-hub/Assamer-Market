@@ -6,6 +6,8 @@ import com.youcode.sudest_market.web.api.v1.response.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,8 +33,6 @@ public class SellerController {
     public ResponseEntity<ApiResponse> acceptSellerRequest(@RequestParam String requestId) {
 
         if (sellerService.updateSellerRequest(UUID.fromString(requestId), RequestStatus.ACCEPTED)){
-            // todo: send email to the user
-
             return ResponseEntity.ok(ApiResponse.success(null, "Request accepted successfully", null));
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)

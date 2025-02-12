@@ -29,3 +29,20 @@ spring:
     multipart:
       max-file-size: 10MB
       max-request-size: 10MB
+
+  mail:
+    properties:
+      "[mail.smtp.connectiontimeout]": 5000
+      "[mail.smtp.timeout]": 3000
+      "[mail.smtp.writetimeout]": 5000
+      "[mail.smtp.auth]": true
+      "[mail.smtp.starttls.enable]": true
+    host: smtp.gmail.com
+    port: 587
+    username: aaittamghart8@gmail.com
+    password: fuzjjtklcvrbxpvj
+
+
+app:
+  frontend:
+    domain: http://localhost:4200

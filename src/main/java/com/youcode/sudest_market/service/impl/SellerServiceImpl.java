@@ -4,7 +4,9 @@ import com.youcode.sudest_market.domain.AppUser;
 import com.youcode.sudest_market.domain.SellerRequest;
 import com.youcode.sudest_market.domain.enums.RequestStatus;
 import com.youcode.sudest_market.exception.NotValidConstraintException;
+import com.youcode.sudest_market.service.AppUserService;
 import com.youcode.sudest_market.service.AuthService;
+import com.youcode.sudest_market.service.MailService;
 import com.youcode.sudest_market.service.SellerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,8 @@ public class SellerServiceImpl implements SellerService {
 
     private final SellerRequestRepository sellerRequestRepository;
     private final AuthService authService;
+    private final MailService mailService;
+    private final AppUserService userService;
 
     @Override
     public SellerRequest createSellerRequest() {
@@ -45,12 +49,18 @@ public class SellerServiceImpl implements SellerService {
         SellerRequest sellerRequest = sellerRequestRepository.findById(requestId)
                 .orElseThrow(() -> new NotValidConstraintException("Request not found"));
 
-        if (sellerRequest.getStatus() == RequestStatus.ACCEPTED && status == RequestStatus.REJECTED) {
+        //  Cant reject accepted request
+        if (status == RequestStatus.REJECTED && sellerRequest.getStatus() == RequestStatus.ACCEPTED) {
             throw new NotValidConstraintException("You can't reject an accepted request.");
         }
+
         // Update the request status
         sellerRequest.setStatus(status);
         sellerRequestRepository.save(sellerRequest);
+        if (status == RequestStatus.ACCEPTED) {
+            AppUser requester = sellerRequest.getAppUser();
+            this.mailService.sellerRequestAccepted(requester);
+        }
 
         return true;
     }
