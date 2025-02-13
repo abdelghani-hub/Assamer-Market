@@ -17,15 +17,14 @@ public class Payment {
     private String method;
     private Double amount;
     private String currency;
+    @Enumerated(EnumType.STRING)
     private PaymentStatus status;
 
     @Column(name = "payed_at")
     private LocalDateTime payedAt;
     
     // Relationships ************************************************
-    @OneToOne(
-            fetch = FetchType.LAZY
-    )
+    @OneToOne
     @JoinColumn(name = "order_id")
     private Order order;
 

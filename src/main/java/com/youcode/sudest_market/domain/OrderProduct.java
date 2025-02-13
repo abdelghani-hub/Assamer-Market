@@ -15,15 +15,11 @@ public class OrderProduct {
     private Integer units;
 
     // Relationships ************************************************
-    @ManyToOne(
-            fetch = FetchType.LAZY
-    )
+    @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
 
-    @ManyToOne(
-            fetch = FetchType.LAZY
-    )
+    @ManyToOne
     @JoinColumn(name = "order_id")
     private Order order;
 

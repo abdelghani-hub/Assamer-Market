@@ -1,6 +1,7 @@
 package com.youcode.sudest_market.service;
 
 import com.youcode.sudest_market.domain.AppUser;
+import com.youcode.sudest_market.domain.enums.Role;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,4 +23,6 @@ public interface AppUserService {
     Page<AppUser> findAll(Pageable pageable);
 
     AppUser updateByUsername(String username, AppUser appUser);
+
+    AppUser updateRole(AppUser appUser, Role role);
 }

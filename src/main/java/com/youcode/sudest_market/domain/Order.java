@@ -16,6 +16,8 @@ public class Order {
 
     @Column(name = "total_amount")
     private Double totalAmount;
+
+    @Enumerated(EnumType.STRING)
     private OrderStatus status;
 
     @Column(name = "from_address")

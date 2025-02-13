@@ -2,12 +2,12 @@ package com.youcode.sudest_market.service.impl;
 
 import com.youcode.sudest_market.domain.AppUser;
 import com.youcode.sudest_market.domain.SellerRequest;
+import com.youcode.sudest_market.domain.Store;
 import com.youcode.sudest_market.domain.enums.RequestStatus;
+import com.youcode.sudest_market.domain.enums.Role;
+import com.youcode.sudest_market.domain.enums.StoreStatus;
 import com.youcode.sudest_market.exception.NotValidConstraintException;
-import com.youcode.sudest_market.service.AppUserService;
-import com.youcode.sudest_market.service.AuthService;
-import com.youcode.sudest_market.service.MailService;
-import com.youcode.sudest_market.service.SellerService;
+import com.youcode.sudest_market.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import com.youcode.sudest_market.repository.SellerRequestRepository;
@@ -23,6 +23,7 @@ public class SellerServiceImpl implements SellerService {
     private final AuthService authService;
     private final MailService mailService;
     private final AppUserService userService;
+    private final StoreService storeService;
 
     @Override
     public SellerRequest createSellerRequest() {
@@ -31,7 +32,7 @@ public class SellerServiceImpl implements SellerService {
 
         // No already existing request pending
         if (sellerRequestRepository.existsByAppUserAndStatus(appUser, RequestStatus.PENDING)) {
-            throw new NotValidConstraintException("You already have a pending request, please wait for the response.");
+            throw new NotValidConstraintException("You already have a pending request, please wait for a response.");
         }
 
         // Create and save the SellerRequest
@@ -39,7 +40,6 @@ public class SellerServiceImpl implements SellerService {
         sellerRequest.setAppUser(appUser);
         sellerRequest.setStatus(RequestStatus.PENDING);
         sellerRequest.setRequestedAt(LocalDateTime.now());
-
         return sellerRequestRepository.save(sellerRequest);
     }
 
@@ -57,8 +57,20 @@ public class SellerServiceImpl implements SellerService {
         // Update the request status
         sellerRequest.setStatus(status);
         sellerRequestRepository.save(sellerRequest);
+
+        // Handle accept case
         if (status == RequestStatus.ACCEPTED) {
+            // Update the user role
             AppUser requester = sellerRequest.getAppUser();
+            this.userService.updateRole(requester, Role.SELLER);
+
+            // create seller store
+            Store store = new Store();
+            store.setOwner(requester);
+            store.setStatus(StoreStatus.NEW);
+            this.storeService.createStore(store);
+
+            // Send email
             this.mailService.sellerRequestAccepted(requester);
         }
 
