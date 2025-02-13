@@ -46,21 +46,20 @@ public class AttachmentController {
 
     // 📌 Download File API
     @GetMapping("/{id}/download")
-    public ResponseEntity<ApiResponse<ByteArrayResource>> downloadFile(@PathVariable UUID id) {
+    public ResponseEntity<ByteArrayResource> downloadFile(@PathVariable UUID id) {
         Attachment attachment = attachmentService.getAttachment(id);
 
         try {
             byte[] data = attachmentService.getFileBytes(attachment);
             ByteArrayResource resource = new ByteArrayResource(data);
 
-            ApiResponse<ByteArrayResource> response = ApiResponse.success(resource, "File downloaded successfully", null);
             return ResponseEntity.ok()
                     .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + attachment.getSrc())
                     .contentType(MediaType.parseMediaType(attachment.getFileType()))
-                    .body(response);
+                    .contentLength(data.length)
+                    .body(resource);
         } catch (IOException e) {
-            ApiResponse<ByteArrayResource> response = ApiResponse.error("File download failed", null);
-            return ResponseEntity.internalServerError().body(response);
+            return ResponseEntity.internalServerError().build();
         }
     }
 

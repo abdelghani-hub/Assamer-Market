@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -30,9 +31,15 @@ public class MailServiceImpl implements MailService {
             MimeMessage mimeMessage = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 
+            // Load the image
+            ClassPathResource imageResource = new ClassPathResource("static/logo.png");
+
             helper.setFrom("aaittamghart8@gmail.com");
             helper.setTo(newSeller.getEmail());
             helper.setSubject("🤩 Request accepted 🤩");
+
+            // Add the image as an inline attachment
+            helper.addInline("logo", imageResource);
 
             // Read HTML template
             String htmlContent;
