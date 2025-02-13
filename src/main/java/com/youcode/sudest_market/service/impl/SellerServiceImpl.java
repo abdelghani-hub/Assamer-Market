@@ -60,8 +60,13 @@ public class SellerServiceImpl implements SellerService {
 
         // Handle accept case
         if (status == RequestStatus.ACCEPTED) {
-            // Update the user role
             AppUser requester = sellerRequest.getAppUser();
+            // handle already accepted case
+            if (requester.getRole() == Role.SELLER) {
+                throw new NotValidConstraintException("User is already a seller.");
+            }
+
+            // Update the user role
             this.userService.updateRole(requester, Role.SELLER);
 
             // create seller store
