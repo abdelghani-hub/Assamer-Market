@@ -15,6 +15,7 @@ public class Store {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+    @Enumerated(EnumType.STRING)
     private StoreStatus status;
 
     @Column(name = "created_at")
@@ -24,13 +25,13 @@ public class Store {
     private LocalDateTime updatedAt;
 
     // Relationships ************************************************
-    @OneToOne(
-            fetch = FetchType.LAZY
-    )
+    @OneToOne
     @JoinColumn(name = "app_user_id")
     private AppUser owner;
 
-    @OneToMany(mappedBy = "store")
+    @OneToMany(
+            mappedBy = "store"
+    )
     private List<Product> products;
     
     // **************************************************************

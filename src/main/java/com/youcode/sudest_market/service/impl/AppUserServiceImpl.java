@@ -1,6 +1,7 @@
 package com.youcode.sudest_market.service.impl;
 
 import com.youcode.sudest_market.domain.AppUser;
+import com.youcode.sudest_market.domain.enums.Role;
 import com.youcode.sudest_market.exception.EntityNotFoundException;
 import com.youcode.sudest_market.exception.InvalidCredentialsException;
 import com.youcode.sudest_market.exception.NullOrBlankArgException;
@@ -140,5 +141,11 @@ public class AppUserServiceImpl implements AppUserService {
         originalAppUser.setRole(appUser.getRole());
 
         return appUserRepository.save(originalAppUser);
+    }
+
+    @Override
+    public AppUser updateRole(AppUser appUser, Role role) {
+        appUser.setRole(role);
+        return appUserRepository.save(appUser);
     }
 }
