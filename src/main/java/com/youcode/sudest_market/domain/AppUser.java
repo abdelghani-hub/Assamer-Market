@@ -41,9 +41,7 @@ public class AppUser implements UserDetails {
     private String address;
 
     // Relationships ************************************************
-    @ManyToOne(
-            fetch = FetchType.LAZY
-    )
+    @ManyToOne
     @JoinColumn(name = "city_id")
     private City city;
 

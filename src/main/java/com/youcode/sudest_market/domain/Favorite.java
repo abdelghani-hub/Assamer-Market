@@ -13,15 +13,11 @@ public class Favorite {
     private UUID id;
 
     // Relationships ************************************************
-    @ManyToOne(
-            fetch = FetchType.LAZY
-    )
+    @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
 
-    @ManyToOne(
-            fetch = FetchType.LAZY
-    )
+    @ManyToOne
     @JoinColumn(name = "app_user_id")
     private AppUser appUser;
 

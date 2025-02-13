@@ -38,15 +38,11 @@ public class Product {
     private String primaryImageSrc;
 
     // Relationships ************************************************
-    @ManyToOne(
-            fetch = FetchType.LAZY
-    )
+    @ManyToOne
     @JoinColumn(name = "store_id")
     private Store store;
 
-    @ManyToOne(
-            fetch = FetchType.LAZY
-    )
+    @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
 
