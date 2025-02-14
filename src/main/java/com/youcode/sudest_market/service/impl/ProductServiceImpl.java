@@ -137,4 +137,10 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.findBySlug(slug)
                 .orElseThrow(() -> new ResourceNotFoundException("Product"));
     }
+
+    @Override
+    public List<Product> findByAuthUserStore() {
+        Store store = this.authService.getAuthenticatedUser().getStore();
+        return productRepository.findByStore(store);
+    }
 }

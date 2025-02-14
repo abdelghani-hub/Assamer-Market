@@ -13,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/products")
 @RequiredArgsConstructor
@@ -50,5 +52,16 @@ public class ProductController {
         product.setCategory(categoryService.findByNameIgnoreCase(productVM.getCategoryName()));
         productService.updateProduct(product);
         return ResponseEntity.ok(ApiResponse.success(productVM, "Product updated successfully", new String[]{"/products/" + product.getSlug()}));
+    }
+
+    @GetMapping("/my-store")
+    @PreAuthorize("hasRole('SELLER')")
+    public ResponseEntity<ApiResponse> getProductsByStoreOwnerUsername() {
+        List<Product> products = productService.findByAuthUserStore();
+        List<ProductVM> productVMs = products.stream().map(productVmMapper::toVM).toList();
+        return ResponseEntity.ok(ApiResponse.success(
+                productVMs,
+                "Products retrieved successfully",
+                null));
     }
 }

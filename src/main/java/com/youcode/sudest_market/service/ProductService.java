@@ -19,4 +19,6 @@ public interface ProductService {
     void validateProduct(Product product, Product existingProduct);
 
     Product findBySlug(String slug);
+
+    List<Product> findByAuthUserStore();
 }
