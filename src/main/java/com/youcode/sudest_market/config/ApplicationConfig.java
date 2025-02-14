@@ -1,6 +1,6 @@
 package com.youcode.sudest_market.config;
 
-import com.youcode.sudest_market.exception.EntityNotFoundException;
+import com.youcode.sudest_market.exception.ResourceNotFoundException;
 import com.youcode.sudest_market.repository.AppUserRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,7 +26,7 @@ public class ApplicationConfig {
     @Bean
     public UserDetailsService userDetailsService() {
         return username -> appUserRepository.findByEmail(username)
-                .orElseThrow(() -> new EntityNotFoundException("User"));
+                .orElseThrow(() -> new ResourceNotFoundException("User"));
     }
 
     @Bean

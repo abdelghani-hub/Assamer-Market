@@ -2,7 +2,7 @@ package com.youcode.sudest_market.service.impl;
 
 import com.youcode.sudest_market.domain.AppUser;
 import com.youcode.sudest_market.domain.enums.Role;
-import com.youcode.sudest_market.exception.EntityNotFoundException;
+import com.youcode.sudest_market.exception.ResourceNotFoundException;
 import com.youcode.sudest_market.exception.InvalidCredentialsException;
 import com.youcode.sudest_market.exception.NullOrBlankArgException;
 import com.youcode.sudest_market.service.AppUserService;
@@ -74,7 +74,7 @@ public class AppUserServiceImpl implements AppUserService {
     public AppUser findById(UUID id) {
         Optional<AppUser> userOP = appUserRepository.findById(id);
         if (userOP.isEmpty()) {
-            throw new EntityNotFoundException("AppUser");
+            throw new ResourceNotFoundException("AppUser");
         }
         return userOP.get();
     }
@@ -119,7 +119,7 @@ public class AppUserServiceImpl implements AppUserService {
         }
         return appUserRepository
                 .findByUsernameOrEmail(username, email)
-                .orElseThrow(() -> new EntityNotFoundException("User"));
+                .orElseThrow(() -> new ResourceNotFoundException("User"));
     }
 
     @Override
@@ -129,7 +129,7 @@ public class AppUserServiceImpl implements AppUserService {
 
     @Override
     public AppUser updateByUsername(String username, AppUser appUser) {
-        AppUser originalAppUser = this.findByUsername(username).orElseThrow(() -> new EntityNotFoundException("AppUser"));
+        AppUser originalAppUser = this.findByUsername(username).orElseThrow(() -> new ResourceNotFoundException("AppUser"));
         if (appUserRepository.existsByEmailAndUsernameNot(appUser.getEmail(), appUser.getUsername())) {
             throw new AlreadyExistException("email", appUser.getEmail());
         }

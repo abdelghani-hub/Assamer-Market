@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -25,5 +26,10 @@ public class StoreServiceImpl implements StoreService {
     public Store updateStore(Store store) {
         store.setUpdatedAt(LocalDateTime.now());
         return storeRepository.save(store);
+    }
+
+    @Override
+    public boolean existsById(UUID id) {
+        return storeRepository.existsById(id);
     }
 }

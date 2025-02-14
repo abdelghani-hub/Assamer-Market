@@ -34,9 +34,6 @@ public class Product {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @Column(name = "primary_image_src")
-    private String primaryImageSrc;
-
     // Relationships ************************************************
     @ManyToOne
     @JoinColumn(name = "store_id")
@@ -57,7 +54,7 @@ public class Product {
     public Product() {
     }
 
-    public Product(String name, String slug, String summary, String description, Integer quantity, Double price, ProductStatus status, LocalDateTime createdAt, LocalDateTime updatedAt, String primaryImageSrc) {
+    public Product(String name, String slug, String summary, String description, Integer quantity, Double price, ProductStatus status, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.name = name;
         this.slug = slug;
         this.summary = summary;
@@ -67,7 +64,6 @@ public class Product {
         this.status = status;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
-        this.primaryImageSrc = primaryImageSrc;
     }
 
     public UUID getId() {
@@ -150,14 +146,6 @@ public class Product {
         this.updatedAt = updatedAt;
     }
 
-    public String getPrimaryImageSrc() {
-        return primaryImageSrc;
-    }
-
-    public void setPrimaryImageSrc(String primaryImageSrc) {
-        this.primaryImageSrc = primaryImageSrc;
-    }
-
     public Store getStore() {
         return store;
     }
@@ -210,11 +198,11 @@ public class Product {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Product product)) return false;
-        return Objects.equals(getId(), product.getId()) || Objects.equals(getName(), product.getName()) || Objects.equals(getSlug(), product.getSlug()) || Objects.equals(getSummary(), product.getSummary()) || Objects.equals(getDescription(), product.getDescription()) || Objects.equals(getQuantity(), product.getQuantity()) || Objects.equals(getPrice(), product.getPrice()) || getStatus() == product.getStatus() || Objects.equals(getCreatedAt(), product.getCreatedAt()) || Objects.equals(getUpdatedAt(), product.getUpdatedAt()) || Objects.equals(getPrimaryImageSrc(), product.getPrimaryImageSrc());
+        return Objects.equals(getId(), product.getId()) || Objects.equals(getName(), product.getName()) || Objects.equals(getSlug(), product.getSlug()) || Objects.equals(getSummary(), product.getSummary()) || Objects.equals(getDescription(), product.getDescription()) || Objects.equals(getQuantity(), product.getQuantity()) || Objects.equals(getPrice(), product.getPrice()) || getStatus() == product.getStatus() || Objects.equals(getCreatedAt(), product.getCreatedAt()) || Objects.equals(getUpdatedAt(), product.getUpdatedAt());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getName(), getSlug(), getSummary(), getDescription(), getQuantity(), getPrice(), getStatus(), getCreatedAt(), getUpdatedAt(), getPrimaryImageSrc());
+        return Objects.hash(getId(), getName(), getSlug(), getSummary(), getDescription(), getQuantity(), getPrice(), getStatus(), getCreatedAt(), getUpdatedAt());
     }
 }

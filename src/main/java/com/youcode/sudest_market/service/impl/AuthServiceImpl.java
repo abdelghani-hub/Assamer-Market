@@ -5,7 +5,7 @@ import com.youcode.sudest_market.domain.City;
 import com.youcode.sudest_market.domain.enums.Role;
 import com.youcode.sudest_market.dto.auth.LoginRequest;
 import com.youcode.sudest_market.dto.auth.RegisterRequest;
-import com.youcode.sudest_market.exception.EntityNotFoundException;
+import com.youcode.sudest_market.exception.ResourceNotFoundException;
 import com.youcode.sudest_market.exception.MismatchException;
 import com.youcode.sudest_market.exception.SomethingWrongException;
 import com.youcode.sudest_market.repository.AppUserRepository;
@@ -68,7 +68,7 @@ public class AuthServiceImpl implements AuthService {
         user.setPhoneNumber(registerRequest.getPhoneNumber());
         user.setAddress(registerRequest.getAddress());
         City city = cityRepository.findByName(registerRequest.getCity())
-                .orElseThrow(() -> new EntityNotFoundException("City"));
+                .orElseThrow(() -> new ResourceNotFoundException("City"));
         user.setCity(city);
         appUserRepository.save(user);
 

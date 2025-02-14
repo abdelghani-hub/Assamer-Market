@@ -32,8 +32,8 @@ public class GlobalExceptionHandler {
                 .body(ApiResponse.error("Resource already exists", List.of(errorDetail)));
     }
 
-    @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<ApiResponse<Void>> handleEntityNotFoundException(EntityNotFoundException exception) {
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<ApiResponse<Void>> handleEntityNotFoundException(ResourceNotFoundException exception) {
         ApiResponse.ErrorDetail errorDetail = new ApiResponse.ErrorDetail(null, exception.getMessage(), "ENTITY_NOT_FOUND");
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(ApiResponse.error("Resource not found", List.of(errorDetail)));

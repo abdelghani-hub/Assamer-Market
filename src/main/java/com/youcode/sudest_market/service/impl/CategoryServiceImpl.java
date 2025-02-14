@@ -2,7 +2,7 @@ package com.youcode.sudest_market.service.impl;
 
 import com.youcode.sudest_market.domain.Category;
 import com.youcode.sudest_market.exception.AlreadyExistException;
-import com.youcode.sudest_market.exception.EntityNotFoundException;
+import com.youcode.sudest_market.exception.ResourceNotFoundException;
 import com.youcode.sudest_market.repository.CategoryRepository;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -31,7 +31,7 @@ public class CategoryServiceImpl implements com.youcode.sudest_market.service.Ca
     @Override
     public Category findById(UUID id) {
         return categoryRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Category"));
+                .orElseThrow(() -> new ResourceNotFoundException("Category"));
     }
 
     @Override
@@ -62,11 +62,22 @@ public class CategoryServiceImpl implements com.youcode.sudest_market.service.Ca
     @Override
     public Category findByName(String name) {
         return categoryRepository.findByName(name)
-                .orElseThrow(() -> new EntityNotFoundException("Category"));
+                .orElseThrow(() -> new ResourceNotFoundException("Category"));
     }
 
     @Override
     public List<Category> findAll() {
         return categoryRepository.findAll();
+    }
+
+    @Override
+    public boolean existsById(UUID id) {
+        return categoryRepository.existsById(id);
+    }
+
+    @Override
+    public Category findByNameIgnoreCase(String name) {
+        return categoryRepository.findByNameIgnoreCase(name)
+                .orElseThrow(() -> new ResourceNotFoundException("Category"));
     }
 }

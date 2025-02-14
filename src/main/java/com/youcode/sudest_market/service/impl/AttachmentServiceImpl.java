@@ -1,7 +1,7 @@
 package com.youcode.sudest_market.service.impl;
 
 import com.youcode.sudest_market.domain.Attachment;
-import com.youcode.sudest_market.exception.EntityNotFoundException;
+import com.youcode.sudest_market.exception.ResourceNotFoundException;
 import com.youcode.sudest_market.repository.AttachmentRepository;
 import com.youcode.sudest_market.service.AttachmentService;
 import lombok.RequiredArgsConstructor;
@@ -49,7 +49,7 @@ public class AttachmentServiceImpl implements AttachmentService {
     @Override
     public Attachment getAttachment(UUID id) {
         return attachmentRepository.findById(id).orElseThrow(
-                () -> new EntityNotFoundException("Attachment")
+                () -> new ResourceNotFoundException("Attachment")
         );
     }
 

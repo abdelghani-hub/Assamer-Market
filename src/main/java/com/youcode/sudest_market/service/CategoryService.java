@@ -24,4 +24,8 @@ public interface CategoryService {
     Category findByName(String name);
 
     List<Category> findAll();
+
+    boolean existsById(UUID id);
+
+    Category findByNameIgnoreCase(String name);
 }
